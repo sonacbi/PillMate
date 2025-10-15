@@ -1,5 +1,4 @@
-// widgets/meal_buttons.dart
-
+// lib/pages/widgets/meal_buttons.dart
 import 'package:flutter/material.dart';
 import '../../models/mapping.dart';
 
@@ -24,13 +23,30 @@ class MealButtons extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: meals.map((meal) {
           final active = mapping.meals[meal] ?? false;
-          return ElevatedButton(
-            onPressed: () => toggleMeal(meal),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: active ? Colors.orange : Colors.grey,
-              minimumSize: const Size(100, 40),
+          Color bgColor;
+          switch (meal) {
+            case "breakfast":
+              bgColor = active ? const Color(0xFFFFD54F) : Colors.grey.shade400;
+              break;
+            case "lunch":
+              bgColor = active ? const Color(0xFFFF9700) : Colors.grey.shade400;
+              break;
+            default:
+              bgColor = active ? const Color(0xFF42A5F6) : Colors.grey.shade400;
+          }
+          return Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4),
+              child: ElevatedButton(
+                onPressed: () => toggleMeal(meal),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: bgColor,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                ),
+                child: Text(labels[meal]!, style: const TextStyle(color: Colors.white, fontSize: 16)),
+              ),
             ),
-            child: Text(labels[meal]!, style: const TextStyle(color: Colors.white)),
           );
         }).toList(),
       ),

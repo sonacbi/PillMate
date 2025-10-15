@@ -1,4 +1,4 @@
-//widgets/pill_list.dart
+// lib/pages/widgets/pill_list.dart
 import 'package:flutter/material.dart';
 import '../../models/pill.dart';
 
@@ -24,36 +24,36 @@ class PillList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (pills.isEmpty) {
+      return Center(
+        child: ElevatedButton(
+          onPressed: addSlot,
+          style: ElevatedButton.styleFrom(backgroundColor: Colors.green, minimumSize: const Size.fromHeight(45)),
+          child: const Text("+ 추가하기", style: TextStyle(color: Colors.white)),
+        ),
+      );
+    }
+
     return ListView.builder(
       itemCount: pills.length + 1,
       itemBuilder: (context, index) {
         if (index < pills.length) {
           final pill = pills[index];
-          final nameController = pillNameControllers.putIfAbsent(
-            pill.id,
-            () => TextEditingController(text: pill.name),
-          );
-          final countController = pillCountControllers.putIfAbsent(
-            pill.id,
-            () => TextEditingController(text: pill.count.toString()),
-          );
+          final nameController = pillNameControllers.putIfAbsent(pill.id, () => TextEditingController(text: pill.name));
+          final countController = pillCountControllers.putIfAbsent(pill.id, () => TextEditingController(text: pill.count.toString()));
 
           return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 4),
+            padding: const EdgeInsets.symmetric(vertical: 6),
             child: Row(
               children: [
-                SizedBox(width: 30, child: Text("${index + 1}", textAlign: TextAlign.center)),
+                SizedBox(width: 30, child: Text("${index + 1}", textAlign: TextAlign.center, style: const TextStyle(fontWeight: FontWeight.bold))),
+                const SizedBox(width: 8),
                 Expanded(
                   flex: 3,
                   child: TextField(
                     controller: nameController,
                     onChanged: (v) => updateName(pill.id, v),
-                    decoration: const InputDecoration(
-                      hintText: "약 이름",
-                      border: OutlineInputBorder(),
-                      isDense: true,
-                      contentPadding: EdgeInsets.all(8),
-                    ),
+                    decoration: const InputDecoration(hintText: "약 이름", border: OutlineInputBorder(), isDense: true, contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 8)),
                   ),
                 ),
                 const SizedBox(width: 8),
@@ -63,32 +63,26 @@ class PillList extends StatelessWidget {
                     controller: countController,
                     onChanged: (v) => updateCount(pill.id, int.tryParse(v) ?? 0),
                     keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      isDense: true,
-                      contentPadding: EdgeInsets.all(8),
-                    ),
+                    decoration: const InputDecoration(border: OutlineInputBorder(), isDense: true, contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 8)),
                     textAlign: TextAlign.center,
                   ),
                 ),
                 const SizedBox(width: 8),
                 ElevatedButton(
                   onPressed: () => removeSlot(pill.id),
-                  style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                  style: ElevatedButton.styleFrom(backgroundColor: Colors.red, padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10)),
                   child: const Text("X", style: TextStyle(color: Colors.white)),
                 ),
               ],
             ),
           );
         } else {
+          // 추가 버튼
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 8),
             child: ElevatedButton(
               onPressed: addSlot,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
-                minimumSize: const Size.fromHeight(45),
-              ),
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.green, minimumSize: const Size.fromHeight(45)),
               child: const Text("+ 추가하기", style: TextStyle(color: Colors.white, fontSize: 16)),
             ),
           );
