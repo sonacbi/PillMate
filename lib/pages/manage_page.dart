@@ -50,6 +50,14 @@ class _ManagePageState extends State<ManagePage> {
   String username = "";
   bool usernameEditing = false;
   bool showResetModal = false;
+  late TextEditingController _usernameController;
+
+  @override
+  void initState() {
+    super.initState();
+    _usernameController = TextEditingController(text: username);
+  }
+
 
   void addUser(String name) {
     if (name.isEmpty) return;
@@ -133,6 +141,12 @@ class _ManagePageState extends State<ManagePage> {
       snapshot = Snapshot(users: [], mapping: []);
       selectedUser = "";
     });
+  }
+
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    super.dispose();
   }
 
   @override
@@ -240,12 +254,12 @@ class _ManagePageState extends State<ManagePage> {
                                 ] else ...[
                                   Expanded(
                                     child: TextField(
+                                      controller: _usernameController,
                                       decoration: const InputDecoration(
                                         hintText: "사용자 이름",
                                         border: OutlineInputBorder(),
                                       ),
                                       onChanged: (v) => setState(() => username = v),
-                                      controller: TextEditingController(text: username),
                                     ),
                                   ),
                                   const SizedBox(width: 8),
@@ -253,13 +267,14 @@ class _ManagePageState extends State<ManagePage> {
                                     onPressed: () {
                                       if (selectedUser.isNotEmpty &&
                                           snapshot.users.contains(selectedUser)) {
-                                        updateUser(selectedUser, username);
+                                        updateUser(selectedUser, _usernameController.text);
                                       } else {
-                                        addUser(username);
+                                        addUser(_usernameController.text);
                                       }
                                       setState(() {
                                         usernameEditing = false;
                                         username = "";
+                                        _usernameController.clear(); // 입력 필드 초기화
                                       });
                                     },
                                     child: Text(selectedUser.isNotEmpty ? "저장" : "추가"),
@@ -269,9 +284,9 @@ class _ManagePageState extends State<ManagePage> {
                                     onPressed: () => setState(() {
                                       username = "";
                                       usernameEditing = false;
+                                      _usernameController.clear();
                                     }),
-                                    style:
-                                        ElevatedButton.styleFrom(backgroundColor: Colors.grey),
+                                    style: ElevatedButton.styleFrom(backgroundColor: Colors.grey),
                                     child: const Text("취소"),
                                   ),
                                 ],
