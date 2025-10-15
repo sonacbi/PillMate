@@ -17,7 +17,9 @@ plugins {
 
 android {
     namespace = "com.example.pillmate"
-    compileSdk = flutter.compileSdkVersion
+    // compileSdk = flutter.compileSdkVersion
+    // compileSdkVersion = 36  // ✅ 여기 수정
+    compileSdk = 36                     // 최소 33 이상으로 설정   
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
@@ -42,7 +44,7 @@ android {
     defaultConfig {
         applicationId = "com.example.pillmate"
         minSdk = flutter.minSdkVersion
-        targetSdk = flutter.targetSdkVersion
+        targetSdk = 36
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }
