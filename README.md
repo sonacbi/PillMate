@@ -37,3 +37,17 @@ adb install build/app/outputs/flutter-apk/app-release.apk
 
 # 이미 설치됐다면
 adb install -r build/app/outputs/flutter-apk/app-release.apk
+
+
+# 이 경로에서 붙여넣기
+C:\Users\User03\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_bluetooth_serial-0.4.0\android\src\main\AndroidManifest.xm
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+  >
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+</manifest>
+

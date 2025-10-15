@@ -15,6 +15,8 @@ class TopPanel extends StatelessWidget {
   final Function(String) addUser;
   final VoidCallback deleteUser;
   final Function(String, String) updateUser;
+  final VoidCallback onBluetoothPressed;
+
 
   const TopPanel({
     super.key,
@@ -31,6 +33,7 @@ class TopPanel extends StatelessWidget {
     required this.addUser,
     required this.deleteUser,
     required this.updateUser,
+    required this.onBluetoothPressed, // ✅ 추가
   });
 
   @override
@@ -71,7 +74,7 @@ class TopPanel extends StatelessWidget {
                 ),
                 const SizedBox(width: 8),
                 ElevatedButton(
-                  onPressed: connecting ? null : () {},
+                  onPressed: connecting ? null : onBluetoothPressed,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: connecting ? Colors.grey : Colors.green,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),

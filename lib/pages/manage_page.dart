@@ -1,9 +1,12 @@
 // lib/pages/manage_page.dart
 import 'package:flutter/material.dart';
+import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
+
 import 'widgets/top_panel.dart';
 import 'widgets/meal_buttons.dart';
 import 'widgets/pill_list.dart';
 import 'widgets/modals.dart';
+import 'widgets/bluetooth_modal.dart';
 import '../utils/storage_helper.dart';
 import '../models/mapping.dart';
 import '../models/pill.dart';
@@ -24,6 +27,9 @@ class _ManagePageState extends State<ManagePage> with TickerProviderStateMixin {
   String selectedUser = "";
   bool usernameEditing = false;
   late TextEditingController _usernameController;
+  bool showBluetoothModal = false;
+
+  BluetoothDevice? connectedDevice;
 
   bool showBackModal = false;
   bool showResetModal = false;
@@ -226,6 +232,7 @@ class _ManagePageState extends State<ManagePage> with TickerProviderStateMixin {
                   TopPanel(
                     status: status,
                     connecting: connecting,
+                    onBluetoothPressed: () => setState(() => showBluetoothModal = true),
                     onBackPressed: onBackPressed,
                     usernameEditing: usernameEditing,
                     usernameController: _usernameController,
@@ -341,6 +348,19 @@ class _ManagePageState extends State<ManagePage> with TickerProviderStateMixin {
                     ),
                   ),
                 ),
+
+            if (showBluetoothModal)
+              BluetoothModal(
+                onClose: () => setState(() => showBluetoothModal = false),
+                onConnected: (device) {
+                  setState(() {
+                    connectedDevice = device;
+                    showBluetoothModal = false;
+                  });
+                },
+              ),
+
+
             ],
           ),
         ),
