@@ -108,7 +108,7 @@ class _ManagePageState extends State<ManagePage> {
     if (selectedUser.isEmpty) return;
     setState(() {
       selectedMapping.pills.add(
-        Pill(id: DateTime.now().millisecondsSinceEpoch),
+        Pill(id: DateTime.now().millisecondsSinceEpoch, name: "", count: 0),
       );
     });
   }
