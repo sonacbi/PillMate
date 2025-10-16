@@ -32,7 +32,8 @@ dependencies:
     sdk: flutter
   shared_preferences: ^2.3.2
   flutter_bluetooth_serial:
-    path: ../../flutter_bluetooth_serial
+    path: ../flutter_bluetooth_serial
+    # 같은 깊이의 폴더로 미리 포크한 모듈을 클론하고 진행
     # git:
     #   url: https://github.com/edufolly/flutter_bluetooth_serial.git
     #   ref: master
